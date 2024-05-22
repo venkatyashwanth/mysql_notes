@@ -1,0 +1,820 @@
+//Lecture-1
+1. My SQL Introduction: 
+
+MySQL: Database Management System. 
+
+Database: A Database is a collection of data stored in a format that can easily be accessed. 
+
+How DBMS Works?
+        >>>	 >>> 
+Laptop	    DBMS     Database
+	<<<      <<<
+
+DBMS: 
+- Oracle 
+- MySQL
+- MySQL Server
+- Postgre SQL 
+- MongoDB
+
+Two type of Database: 
+1. Relational (Relational Database(RDBMS))
+- RDMBS use SQL (Structured Query Language) 
+> Oracle 
+> MySQL
+> MySQL Server
+> Postgre SQL
+
+2. NoSQL 
+- NoSQL is not a Table-based Database. 
+- NoSQL databases are document based. 
+- MongoDB, Redis, Cassandra etc. 
+
+Advantage of MySQL: 
+- Cross platform 
+- Used with multiple languages (PHP, NodeJS, Python, c#). 
+- MySQL Software is Open Source. 
+- MySQL is RDBMS. 
+- The MySQL Database Server is fast, reliable, scalable and easy to use. 
+- MySQL Server works in client/server or embeded systems. 
+
+What we will learn in this course: 
+- Create Database & Tables in database. 
+- Add Data in database. 
+- Update Data in database. 
+- Read data from database. 
+- Delete data from database. 
+
+//Lecture-2
+3. MySQL Create Table: 
+
+3 type of Category in Datatypes: 
+1. String 
+2. Numeric 
+3. Date and Time 
+
+String DataTypes: Multiples see in ref
+Numeric DataTypes: Multiples see in ref
+
+Date & Time Datatypes: 
+1. Date
+2. DATETIME (fsp)
+3. TIMESTAMP (fsp)
+4. TIME (fsp)
+5. YEAR
+
+To Create Database: 
+> create database student; 
+> use student; //To set default schema 
+
+Create Table Syntax: 
+
+CREATE TABLE table_name(
+        column1 datatype,
+        column2 datatype,
+        column3 datatype 
+        ...
+)
+
+Creating Table: 
+CREATE TABLE personal(
+        id INT, 
+        name VARCHAR(50),
+        birth_date DATE, 
+        phone VARCHAR(12),
+        gender VARCHAR(1)
+);
+
+CREATE TABLE product(
+        pid INT, 
+        pname VARCHAR(50),
+        pcompany VARCHAR(50),
+        price INT 
+)
+
+//4.Lecture-3
+Inserting Data in tables with SQL. 
+
+Syntax: 
+INSERT INTO table_name (column1,column2,...)
+VALUES (value1,value2,...);
+
+INSERT INTO personal(id,name,birth_date,phone,gender)
+VALUES (1, "Ram Kumar","1990-07-15","9032717402","M");
+
+INSERT INTO personal(id,name,birth_date,phone,gender)
+VALUES (2, "Meera Khan","1991-02-10","9032717403","F");
+
+//5.Lecture-4
+Inserting multiple row in table
+
+Syntax: 
+INSERT INTO table_name(column1, column2, ...)
+VALUES 
+(value1, value2,..),
+(value1, value2,..),
+(value1, value2,..);
+
+INSERT INTO personal(id,name,birth_date,phone,gender)
+VALUES 
+(3, "Anil Kapoor","1991-10-05","9032717404","M"),
+(4, "Juhi Chawla","1992-03-25","9032717405","F"),
+(5, "John Abraham","1992-02-07","9032717406","M");
+
+//6.Constraints. 
+List of constraints in MySQL: 
+. NOT NULL 
+. UNIQUE
+. DEFAULT 
+. CHECK 
+. FOREIGN KEY 
+. PRIMARY KEY 
+
+Table Syntax with constraints: 
+
+CREATE TABLE table_name(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50) NOT NULL,
+        age INT NOT NULL CHECK(age>=18),
+        gender VARCHAR(10) NOTNULL,
+        phone VARCHAR(10) NOTNULL UNIQUE,
+        city VARCHAR(10) NOTNULL DEFAULT 'Agra',
+);
+
+CREATE TABLE personal(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50) NOT NULL,
+        age INT NOT NULL CHECK (age>=18),
+        gender varchar(1) NOT NULL,
+        phone VARCHAR(10) NOT NULL UNIQUE, 
+        city VARCHAR(15) NOT NULL DEFAULT 'Agra'
+);
+
+INSERT INTO personal(id,name,age,gender,phone,city)
+VALUES 
+(1, "Ram Kumar",19,"M","4022155","Agra");
+
+Check code for constraint: 
+1. 
+INSERT INTO personal(id,name,age,phone,city)
+VALUES 
+(2, "Sarita",18,"4015155","Agra");
+
+2. 
+INSERT INTO personal(id,name,age,phone)
+VALUES 
+(3, "Salman Khan",20,"4012155");
+
+3. 
+INSERT INTO personal(id,name,age,gender,phone)
+VALUES 
+(4, "Juhi Chawla",21,"F","4015155");
+
+4.
+INSERT INTO personal(id,name,age,gender,phone)
+VALUES 
+(5, "Johny",15,"F","4015155");
+
+//7.Select with where clause.
+
+How to show data from Tables with SQL?
+
+Syntax: 
+SELECT column1, column2, column3, ... 
+FROM table_name;
+
+Syntax: 
+SELECT * 
+FROM table_name;
+
+>>>
+> create database student; 
+> use student; //To set default schema
+
+Creating Table: 
+CREATE TABLE personal(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50) NOT NULL,
+        age INT NOT NULL CHECK (age>=18),
+        gender varchar(1) NOT NULL,
+        phone VARCHAR(10) NOT NULL UNIQUE, 
+        city VARCHAR(15) NOT NULL DEFAULT 'Agra'
+);
+
+Inserting Data into Table: 
+INSERT INTO personal(id,name,age,gender,phone,city)
+VALUES 
+(1, "Ram Kumar",19,"M","4022155","Agra"),
+(2, "Sarita Kumari",21,"F","4034421","Delhi"),
+(3, "Salman Khan",20,"M","4056221","Agra"),
+(4, "Juhi Chawla",18,"F","4089821","Bhopal"),
+(5, "Anil Kapoor",22,"M","4025221","Agra"),
+(6, "John Abraham",21,"M","4033776","Delhi");
+
+>>Displays the Table: 
+SELECT * FROM student.personal;
+
+>>Display only particular columns in a table: 
+SELECT id, name, phone from personal;
+
+>>Renaming the column names: 
+SELECT id AS Id, name AS Student, phone AS Phone from personal;
+
+SELECT id AS Id, name AS "Student Name", phone AS Phone from personal;
+
+>>Select Data with WHERE Clause: 
+
+Syntax: 
+SELECT column1, column2, column3, ...
+FROM table_name 
+WHERE condition;
+
+REF: Where Comparison Operators
+
+>>Data whose gender is Female:
+SELECT * FROM personal
+WHERE gender = "F";
+
+>>Data whose age is less than 20;
+SELECT * FROM personal
+WHERE age < 20;
+
+>>Data whose age is less than or equal to 20;
+SELECT * FROM personal
+WHERE age <= 20;
+
+>>Data whose age is greater than 20;
+SELECT * FROM personal
+WHERE age > 20;
+
+>>Data who does not stay in agra: 
+SELECT * FROM personal
+WHERE city != "Agra";
+
+SELECT * FROM personal
+WHERE city <> "Agra";
+
+>>Data who stay in agra: 
+SELECT * FROM personal
+WHERE city = "Agra";
+
+
+//
+8. My SQL AND, OR, NOT Operators
+
+>> Whose age is between 18 and 21. 
+>> Whose age is 18 or 21. 
+
+
+Synax: 
+
+SELECT column1,column2,column3,... 
+FROM table_name 
+WHERE condition1 AND condition2 AND condition3...;
+
+SELECT column1,column2,column3,... 
+FROM table_name 
+WHERE condition1 OR condition2 OR condition3...;
+
+>>
+SELECT * FROM personal
+WHERE age >=18 AND age <=21;
+
+SELECT * FROM personal
+WHERE age <=20 AND gender = "M";
+
+SELECT * FROM personal
+WHERE age <=20 AND gender = "M" AND city="Agra";
+
+SELECT * FROM personal
+WHERE age <=20 OR city="Agra";
+
+SELECT * FROM personal
+WHERE city="Bhopal" OR city="Agra";
+
+SELECT * FROM personal
+WHERE (city="Bhopal" OR city="Agra") AND gender = "M";
+
+
+SELECT * FROM personal
+WHERE NOT (city="Bhopal" OR city="Agra");
+
+SELECT * FROM personal 
+WHERE NOT age >= 20;
+
+//
+9. My SQL IN Operator
+
+
+WHERE age >=18 OR age <=21; ==> WHERE age IN (18,21);
+
+SYNTAX: 
+SELECT column1,column2,column3,... 
+FROM table_name 
+WHERE column_name IN (value1, value2,...);
+
+SELECT column1,column2,column3,... 
+FROM table_name 
+WHERE column_name NOT IN (value1, value2,...);
+
+
+>>
+SELECT * FROM personal
+WHERE age IN (18,21);
+
+SELECT * FROM personal
+WHERE age IN (18,21,19);
+
+SELECT * FROM personal
+WHERE age NOT IN (18,21,19);
+
+SELECT * FROM personal
+WHERE city IN ("Delhi","Bhopal");
+
+SELECT * FROM personal
+WHERE city NOT IN ("Delhi","Bhopal");
+
+SELECT * FROM personal
+WHERE id IN (1,3,4);
+
+//
+10. Between and Not Between Operator 
+
+Syntax: 
+
+SELECT column1, column2, column3, ... 
+FROM table_name 
+WHERE column_name BETWEEN value1 AND value2;
+
+SELECT column1, column2, column3, ... 
+FROM table_name 
+WHERE column_name NOT BETWEEN value1 AND value2;
+
+>>
+SELECT * FROM personal 
+WHERE age BETWEEN 18 AND 20;
+
+>>
+SELECT * FROM personal 
+WHERE age NOT BETWEEN 18 AND 20;
+
+>>
+SELECT * FROM personal 
+WHERE id BETWEEN 2 AND 5;
+
+>>
+SELECT * FROM personal 
+WHERE id NOT BETWEEN 2 AND 5;
+
+>>
+SELECT * FROM personal 
+WHERE name BETWEEN "a" AND "k";
+
+Creating Table: 
+
+CREATE TABLE persons(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50) NOT NULL, 
+        birth_date DATE NOT NULL 
+);
+
+Inserting Data into Table: 
+
+INSERT INTO persons(id,name,birth_date)
+VALUES 
+(1, "Ram","1995-02-10"),
+(2, "Madan","1995-11-03"),
+(3, "Salman","1996-06-12"),
+(4, "Shoiab","1995-04-21"),
+(5, "Juhi","1996-09-25");
+
+>>
+SELECT * FROM persons
+WHERE birth_date BETWEEN "1995-01-01" AND "1995-06-30";
+
+//
+11. SELECCT DATA with LIKE Operator: 
+
+WildCard Characters: 
+% Percentage Sign: Represents zero, one or multiple characters. 
+_ Underscore: Represents a single character 
+
+SELECCT column1, column2, column3, ... 
+FROM table_name
+WHERE column_name LIKE pattern; 
+
+SELECCT column1, column2, column3, ... 
+FROM table_name
+WHERE column_name NOT LIKE pattern; 
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "s%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "a%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "ram%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "rm%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "%am%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "r%" OR name LIKE "s%";
+
+>>
+SELECT * FROM personal 
+WHERE name NOT LIKE "r%";
+
+>>
+SELECT * FROM personal 
+WHERE BINARY name LIKE "r%";
+
+>>
+SELECT * FROM personal 
+WHERE BINARY name LIKE "R%";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "%r";
+
+>>
+SELECT * FROM personal 
+WHERE name LIKE "%ar";
+
+>>
+SELECT * FROM personal
+WHERE phone LIKE "%21";
+
+>>
+SELECT * FROM personal
+WHERE phone NOT LIKE "%21";
+
+>>
+SELECT * FROM personal
+WHERE name LIKE "s%n";
+
+>>
+SELECT * FROM personal
+WHERE name LIKE "r%r";
+
+>>
+SELECT * FROM personal
+WHERE name LIKE "_am%";
+
+>>
+SELECT * FROM personal
+WHERE name LIKE "__m%";
+
+>>
+SELECT * FROM personal
+WHERE name LIKE "r_m%";
+
+//////////////////////
+12. SELECCT DATA with Regular Expressions: 
+>> see screen shot for signs 
+
+Syntax: 
+SELECCT column1, column2, column3,... 
+FROM table_name
+WHERE column_name REGEXP pattern; 
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'ra';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'ta';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'man';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '^ra';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '^ra';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'an$';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'ram|kapoor|khan';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '^ram|poor|^khan';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '^ram|poor|khan$';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '[is]';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '[rm]a';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '^[rs]';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '[rs]$';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '[ra]$';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP 'r[am]';
+
+>>
+SELECT * FROM personal
+WHERE name REGEXP '[a-j]r';
+
+//////////////////////
+13. ORDER BY & DISTINCT: 
+
+SELECT Data with ORDER BY: 
+
+ASC and DESC: 
+Syntax: 
+SELECCT column1, column2, column3, ... 
+FROM table_name 
+ORDER BY column1, column2,... ASC | DESC; 
+
+>>
+SELECT * FROM personal 
+ORDER BY name;
+
+>>
+SELECT * FROM personal 
+ORDER BY name DESC;
+
+>>
+SELECT * FROM personal
+WHERE city = "Agra"
+ORDER BY name DESC;
+
+>>
+SELECT * FROM personal 
+ORDER BY age;
+
+>>
+SELECT * FROM personal 
+ORDER BY city;
+
+>>
+SELECT * FROM personal 
+ORDER BY name, city;
+
+SELECT Data with DISTINCT: 
+
+Syntax: 
+SELECCT DISTINCT column1, column2,... 
+FROM table_name;
+
+>>
+SELECT DISTINCT City FROM personal;
+
+>>
+SELECT DISTINCT age FROM personal;
+
+>>
+SELECT DISTINCT age FROM personal
+ORDER BY age;
+
+//////////////////////
+14. IS NULL & IS NOT NULL 
+
+SELECT with IS NULL Syntax: 
+
+SELECT column1, column2, column3,...
+FROM table_name
+WHERE column IS NULL;
+
+SELECT column1, column2, column3,...
+FROM table_name
+WHERE column IS NOT NULL;
+
+>>>
+crate database test;
+use test;
+
+CREATE TABLE persons(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50), 
+        birth_date DATE 
+);
+
+Inserting Data into Table: 
+
+INSERT INTO persons(id,name,birth_date)
+VALUES 
+(1, "Ram","1995-02-10"),
+(2, "Madan","1995-11-03"),
+(3, "Salman","1996-06-12"),
+(4, "Shoiab","1995-04-21"),
+(5, "Juhi","1996-09-25"),
+(6, "Raman",),
+(7, ,"1996-08-10");
+
+Missing data with null
+INSERT INTO persons(id,name)
+VALUES 
+(6, "Raman");
+
+INSERT INTO persons(id,birth_date)
+VALUES 
+(7, "1996-08-10");
+
+>>
+SELECt * FROM persons
+WHERE birth_date IS NULL;
+
+>>
+SELECt * FROM persons
+WHERE name IS NULL;
+
+>>
+SELECt * FROM persons
+WHERE name IS NOT NULL;
+
+
+//////////////////////
+15. LIMIT & OFFSET
+
+Select with LIMIT Syntax: 
+
+SELECT column1, column2, column3, ...
+FROM table_name
+WHERE condition
+LIMIT number;
+
+>>
+SELECT * FROM personal
+LIMIT 3;
+
+>>
+SELECT * FROM personal
+LIMIT 2;
+
+>>
+SELECT * FROM personal
+WHERE city="Agra";
+
+>>
+SELECT * FROM personal
+WHERE city="Agra"
+LIMIT 2;
+
+>>
+SELECT * FROM personal
+WHERE city="Agra"
+ORDER BY name 
+LIMIT 3;
+
+SELECT Data with LIMIT and OFFSET: 
+
+SELECT column1, column2, column3, ...
+FROM table_name 
+WHERE condition
+LIMIT offset, number;
+
+
+>>
+SELECT * FROM personal
+ORDER BY name;
+
+>>
+SELECT * FROM personal
+ORDER BY name
+LIMIT 3, 3;
+
+
+//////////////////////
+16. Select Data with Aggregate Functions.
+
+> create database Emp; 
+> use Emp; 
+
+create table employee(
+	id INT,
+	name varchar(20),
+	age INT,
+	gender varchar(10),
+	salary INT
+);
+
+
+INSERT INTO employee(id, name, age, gender, salary)
+values 
+(1,"Ram Kumar",19,"Male",4500),
+(2,"Salman Khan",18,"Male",5200),
+(3,"Meera Khan",20,"Female",6000),
+(4,"Sarita Kumari",21,"Female",8500),
+(5,"Anil Kapoor",20,"Male",6300),
+(6,"Shahid Kapoor",19,"Male",4800),
+(7,"Virat Kohli",21,"Male",5700);
+
+
+Syntax: Aggregate Functions. 
+COUNT(column_name);
+MAX(column_name);
+MIN(column_name);
+SUM(column_name);
+AVG(column_name);
+
+
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+
+
+>>
+SELECT COUNT(name) from employee;
+
+
+> create database student; 
+> use student; //To set default schema
+
+Creating Table: 
+CREATE TABLE personal(
+        id INT NOT NULL UNIQUE, 
+        name VARCHAR(50) NOT NULL,
+	percentage INT NOT NULL,
+        age INT NOT NULL CHECK (age>=18),
+        gender varchar(1) NOT NULL,
+        phone VARCHAR(10) NOT NULL UNIQUE, 
+        city VARCHAR(15) NOT NULL DEFAULT 'Agra'
+);
+
+Inserting Data into Table: 
+INSERT INTO personal(id,name,percentage,age,gender,phone,city)
+VALUES 
+(1, "Ram Kumar",45,19,"M","4022155","Agra"),
+(2, "Sarita Kumari",56,21,"F","4034421","Delhi"),
+(3, "Salman Khan",62,20,"M","4056221","Agra"),
+(4, "Juhi Chawla",47,18,"F","4089821","Bhopal"),
+(5, "Anil Kapoor",74,22,"M","4025221","Agra"),
+(6, "John Abraham",64,21,"M","4033776","Delhi"),
+(7, "Shahid Kapoor",52,20,"M","4022784","Agra");
+
+>>
+SELECT COUNT(*) from personal;
+
+>>
+SELECT COUNT(DISTINCT city) from personal;
+
+>>
+SELECT COUNT(DISTINCT city) AS Count from personal;
+
+>>
+SELECT MAX(percentage) AS Percentage from personal;
+
+>>
+SELECT MIN(percentage) AS Percentage from personal;
+
+>>
+SELECT MIN(percentage) AS Percentage, name, city from personal;
+
+>>
+SELECT SUM(percentage) AS Total from personal;
+
+>>
+SELECT AVG(percentage) AS Average from personal;
+
+
+
+
+
+
+
+
+
+
+
